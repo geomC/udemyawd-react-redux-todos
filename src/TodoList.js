@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Todo from './Todo';
 import {connect} from 'react-redux'
+import {removeTodo} from './actionCreators'
 
 class TodoList extends Component {
     constructor(props) {
@@ -8,12 +9,18 @@ class TodoList extends Component {
     }
 
     render() {
-        let todos = this.props.todos.map((todo, index) => <Todo task={todo.task} key={index}/>);
+        let todos = this.props.todos.map((todo, index) => <Todo removeTodo={this.removeTodo.bind(this, todo.id)}
+                                                                task={todo.task}
+                                                                key={index}/>);
         return (
             <ul>
                 {todos}
             </ul>
         )
+    }
+
+    removeTodo(id) {
+        this.props.dispatch(removeTodo(id))
     }
 }
 

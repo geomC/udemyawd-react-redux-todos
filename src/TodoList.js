@@ -29,9 +29,5 @@ const mapStateToProps = reduxState => (
         todos: reduxState.todos
     });
 
-const mapDispatchToProps = (dispatch) => ({
-   removeTodo: id => {
-       dispatch(removeTodo(id))
-   }
-});
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
+
+export default connect(mapStateToProps, {removeTodo})(TodoList)

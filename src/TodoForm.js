@@ -45,10 +45,6 @@ class TodoForm extends Component {
 
 
 
-const mapDispatchToProps = (dispatch) => ({
-    submitTodo: function(task) {
-        dispatch(addTodo(task))
-    }
-});
 
-export default connect(null, mapDispatchToProps)(TodoForm)
+
+export default connect(null, {submitTodo: addTodo})(TodoForm)

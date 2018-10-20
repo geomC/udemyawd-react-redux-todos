@@ -37,7 +37,7 @@ class TodoForm extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.dispatch(addTodo(this.state.formVal));
+        this.props.submitTodo(this.state.formVal);
         this.setState(this.defaultState)
     }
 
@@ -45,8 +45,10 @@ class TodoForm extends Component {
 
 
 
-// const mapDispatchToProps = (dispatch, ownProps) => ({
-//     submitTodo: dispatch(addTodo(ownProps))
-// });
-//
-export default connect(null, null)(TodoForm)
+const mapDispatchToProps = (dispatch) => ({
+    submitTodo: function(task) {
+        dispatch(addTodo(task))
+    }
+});
+
+export default connect(null, mapDispatchToProps)(TodoForm)

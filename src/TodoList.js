@@ -9,7 +9,7 @@ class TodoList extends Component {
     }
 
     render() {
-        let todos = this.props.todos.map((todo, index) => <Todo removeTodo={this.removeTodo.bind(this, todo.id)}
+        let todos = this.props.todos.map((todo, index) => <Todo removeTodo={this.props.removeTodo.bind(this, todo.id)}
                                                                 task={todo.task}
                                                                 key={index}/>);
         return (
@@ -28,4 +28,10 @@ const mapStateToProps = reduxState => (
     {
         todos: reduxState.todos
     });
-export default connect(mapStateToProps)(TodoList)
+
+const mapDispatchToProps = (dispatch) => ({
+   removeTodo: id => {
+       dispatch(removeTodo(id))
+   }
+});
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList)

@@ -3,14 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import {Provider} from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import thunk from 'redux-thunk'
 
 import rootReducer from './rootReducer';
 
-const store = createStore(rootReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(
+    rootReducer,
+    compose( // compose all middelware together to one function
+        applyMiddleware(thunk),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+  );
 
 ReactDOM.render(
     <Provider store={store}>

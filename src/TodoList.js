@@ -1,11 +1,21 @@
 import React, {Component} from 'react';
 import Todo from './Todo';
 import {connect} from 'react-redux'
-import {removeTodo} from './actionCreators'
+import {addTodo, removeTodo} from './actionCreators'
+import TodoForm from './TodoForm'
+import { Route } from "react-router-dom";
 
 class TodoList extends Component {
     constructor(props) {
         super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(val) {
+        this.props.addTodo(val);
+    }
+    removeTodo(id) {
+        this.props.removeTodo(id);
     }
 
     render() {
@@ -13,9 +23,18 @@ class TodoList extends Component {
                                                                 task={todo.task}
                                                                 key={index}/>);
         return (
-            <ul>
-                {todos}
-            </ul>
+            <div>
+                {/*"Outlet" that shows list when in /todos route and form when in /todos/new*/}
+                <Route
+                    path="/todos/new"
+                    component={props => (
+                        <TodoForm
+                            {...props} // passes down route props
+                            handleSubmit={this.handleSubmit} />
+                    )}
+                />
+                <Route exact path="/todos" component={() => <ul>{todos}</ul>} />
+            </div>
         )
     }
 
@@ -30,4 +49,4 @@ const mapStateToProps = reduxState => (
     });
 
 
-export default connect(mapStateToProps, {removeTodo})(TodoList)
+export default connect(mapStateToProps, {addTodo, removeTodo})(TodoList)

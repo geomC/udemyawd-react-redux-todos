@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {addTodo} from './actionCreators'
 
-class TodoForm extends Component {
+export default class TodoForm extends Component {
     constructor(props) {
         super(props);
         this.defaultState ={
@@ -12,6 +10,13 @@ class TodoForm extends Component {
 
         this.updateFormVal = this.updateFormVal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        this.props.handleSubmit(this.state.formVal);
+        e.target.reset();
+        this.props.history.push("/todos");
     }
 
     render() {
@@ -34,17 +39,6 @@ class TodoForm extends Component {
             formVal: e.target.value
         })
     }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        this.props.submitTodo(this.state.formVal);
-        this.setState(this.defaultState)
-    }
-
 }
 
 
-
-
-
-export default connect(null, {submitTodo: addTodo})(TodoForm)
